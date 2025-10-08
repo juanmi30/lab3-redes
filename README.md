@@ -1,6 +1,6 @@
-# Explicación de Librerías Usadas en el Proyecto Publisher–Subscriber
+# Explicación de Librerías Usadas en el laboratorio Publisher–Subscriber
 
-Este proyecto implementa un modelo **Publicador–Suscriptor** utilizando los protocolos **TCP y UDP** en **Windows**, haciendo uso de la biblioteca **Winsock2** para la comunicación en red.
+Este laboratorio implementa un modelo **Publicador–Suscriptor** utilizando los protocolos **TCP y UDP** en **Windows**, haciendo uso de la biblioteca **Winsock2** para la comunicación en red.
 
 A continuación se describen las librerías empleadas y su función dentro del programa:
 
@@ -68,3 +68,97 @@ Proporciona todas las funciones necesarias para enviar y recibir datos, crear so
 - sendto() / recvfrom(): Envía y recibe datos en UDP.
 - closesocket(): Cierra un socket cuando ya no se usa.
 - WSACleanup(): Libera los recursos utilizados por Winsock al finalizar el programa.
+
+---
+
+# Instrucciones para Compilar y Ejecutar el Proyecto
+
+## Requisitos Previos
+
+1. **Sistema operativo:** Windows 10 o superior.  
+2. **Compilador C:** [MinGW](https://sourceforge.net/projects/mingw/) o [TDM-GCC](https://jmeubank.github.io/tdm-gcc/).  
+   - Asegurarse de agregar la ruta de `gcc.exe` a la variable de entorno **PATH**.  
+3. **Archivos del proyecto:**  
+   Debes tener los seis programas C:
+   - `broker_tcp.c`
+   - `publisher_tcp.c`
+   - `subscriber_tcp.c`
+   - `broker_udp.c`
+   - `publisher_udp.c`
+   - `subscriber_udp.c`
+
+
+## Compilación
+
+Abrir una terminal en la carpeta del proyecto y ejecutar los siguientes comandos (si no estan los .exe en la carpeta src):
+
+```bash
+gcc broker_tcp.c -o broker_tcp.exe -lws2_32
+gcc publisher_tcp.c -o publisher_tcp.exe -lws2_32
+gcc subscriber_tcp.c -o subscriber_tcp.exe -lws2_32
+gcc broker_udp.c -o broker_udp.exe -lws2_32
+gcc publisher_udp.c -o publisher_udp.exe -lws2_32
+gcc subscriber_udp.c -o subscriber_udp.exe -lws2_32
+```
+
+## Ejecución
+
+### Paso 1. Inicia el Broker
+
+Primero se debe ejecutar el servidor broker (ya sea el udp o tcp), ya que los demás clientes se conectan a él.
+```bash
+.\broker_tcp.exe 
+
+```
+o
+```bash
+.\broker_udp.exe 
+
+```
+
+### Paso 2. Iniciar uno o varios Suscriptores
+
+En otras terminales (se necesita una terminal por suscriptor, es decir, si se quieren 3 suscriptores se tienen que abrir 3 terminales y en cada una escribir el codigo de abajo), ejecutar el suscriptor:
+
+```bash
+cd ruta_donde_este_el_subscriber_tcp.exe
+.\subscriber_tcp.exe 
+
+```
+o
+```bash
+cd ruta_donde_este_el_subscriber_udp.exe
+.\subscriber_udp.exe 
+
+```
+
+Al iniciar, debes escribir un comando para suscribirte a uno o varios partidos(deben estar separados por espacio):
+
+```bash
+EQUIPO1vsEQUIPO2 EQUIPO2vsEQUIPO3
+```
+
+El suscriptor quedará a la espera de mensajes relacionados con esos temas.
+
+
+### Paso 3. Inicia uno o varios Publicadores
+
+En otras terminales (se necesita una terminal por publicador, es decir, si se quieren 3 publicadores se tienen que abrir 3 terminales y en cada una escribir el codigo de abajo), ejecutar el publicador:
+
+```bash
+cd ruta_donde_este_el_publisher_tcp.exe
+.\publisher_tcp.exe 
+```
+o
+```bash
+cd ruta_donde_este_el_publisher_udp.exe
+.\publisher_udp.exe 
+```
+
+Enviar un mensaje indicando el tema y el contenido, por ejemplo:
+
+```bash
+EQUIPO1vsEQUIPO2 Gol del delantero!
+```
+
+El Broker recibirá ese mensaje y lo reenviará solo a los suscriptores que estén registrados al partido EQUIPO1vsEQUIPO2.
