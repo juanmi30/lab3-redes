@@ -4,7 +4,7 @@
 #include <winsock2.h>
 
 #define BROKER_PORT 5000
-#define BROKER_IP "172.20.224.1"
+#define BROKER_IP "127.0.0.1"
 #define BUF_SIZE 512
 
 int main() {

@@ -3,7 +3,7 @@
 #include <string.h>
 #include <winsock2.h>
 
-#define BROKER_IP "172.20.224.1"
+#define BROKER_IP "127.0.0.1"
 #define BROKER_PORT 6000
 #define BUF_SIZE 512
 
