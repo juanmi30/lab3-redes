@@ -1,0 +1,7 @@
+Comandos: 
+
+broker: broker_quic.exe -cert_hash:EF05AD8ADADEBDCA92B73FF9B2D5640B023B2127 -port:4433
+
+Publisher: publisher_quic.exe -target:127.0.0.1 -port:4433
+
+Subscriber: subscriber_quic.exe -target:127.0.0.1 -port:4433
